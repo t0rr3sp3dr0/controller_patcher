@@ -440,6 +440,15 @@ CONTROLLER_PATCHER_RESULT_OR_ERROR ControllerPatcherUtils::convertAnalogSticks(H
         u8 * cur_data = &data->data_union.controller.cur_hid_data[0];
         if(cur_data == NULL) return CONTROLLER_PATCHER_ERROR_NULL_POINTER;
 
+        u8 invertLX = config_controller[deviceslot][CONTRPS_VPAD_BUTTON_L_STICK_X_INVERT][1];
+        u8 invertLY = config_controller[deviceslot][CONTRPS_VPAD_BUTTON_L_STICK_Y_INVERT][1];
+        u8 invertRX = config_controller[deviceslot][CONTRPS_VPAD_BUTTON_R_STICK_X_INVERT][1];
+        u8 invertRY = config_controller[deviceslot][CONTRPS_VPAD_BUTTON_R_STICK_Y_INVERT][1];
+
+        if(cur_data[config_controller[deviceslot][CONTRPS_DOUBLE_USE_BUTTON_ACTIVATOR][0]] & config_controller[deviceslot][CONTRPS_DOUBLE_USE_BUTTON_ACTIVATOR][1]){
+            invertLY = !invertLY;
+        }
+
         s32 deadzone = 0;
 
         if( config_controller[deviceslot][CONTRPS_VPAD_BUTTON_L_STICK_X][0] != CONTROLLER_PATCHER_INVALIDVALUE){
@@ -451,7 +460,7 @@ CONTROLLER_PATCHER_RESULT_OR_ERROR ControllerPatcherUtils::convertAnalogSticks(H
                                                    config_controller[deviceslot][CONTRPS_VPAD_BUTTON_L_STICK_X][1],
                                                    config_controller[deviceslot][CONTRPS_VPAD_BUTTON_L_STICK_X_MINMAX][0],
                                                    config_controller[deviceslot][CONTRPS_VPAD_BUTTON_L_STICK_X_MINMAX][1],
-                                                   config_controller[deviceslot][CONTRPS_VPAD_BUTTON_L_STICK_X_INVERT][1],
+                                                   invertLX,
                                                    deadzone);
         }
 
@@ -464,7 +473,7 @@ CONTROLLER_PATCHER_RESULT_OR_ERROR ControllerPatcherUtils::convertAnalogSticks(H
                                                    config_controller[deviceslot][CONTRPS_VPAD_BUTTON_L_STICK_Y][1],
                                                    config_controller[deviceslot][CONTRPS_VPAD_BUTTON_L_STICK_Y_MINMAX][0],
                                                    config_controller[deviceslot][CONTRPS_VPAD_BUTTON_L_STICK_Y_MINMAX][1],
-                                                   config_controller[deviceslot][CONTRPS_VPAD_BUTTON_L_STICK_Y_INVERT][1],
+                                                   invertLY,
                                                    deadzone);
         }
 
@@ -478,7 +487,7 @@ CONTROLLER_PATCHER_RESULT_OR_ERROR ControllerPatcherUtils::convertAnalogSticks(H
                                                    config_controller[deviceslot][CONTRPS_VPAD_BUTTON_R_STICK_X][1],
                                                    config_controller[deviceslot][CONTRPS_VPAD_BUTTON_R_STICK_X_MINMAX][0],
                                                    config_controller[deviceslot][CONTRPS_VPAD_BUTTON_R_STICK_X_MINMAX][1],
-                                                   config_controller[deviceslot][CONTRPS_VPAD_BUTTON_R_STICK_X_INVERT][1],
+                                                   invertRX,
                                                    deadzone);
         }
 
@@ -492,7 +501,7 @@ CONTROLLER_PATCHER_RESULT_OR_ERROR ControllerPatcherUtils::convertAnalogSticks(H
                                                    config_controller[deviceslot][CONTRPS_VPAD_BUTTON_R_STICK_Y][1],
                                                    config_controller[deviceslot][CONTRPS_VPAD_BUTTON_R_STICK_Y_MINMAX][0],
                                                    config_controller[deviceslot][CONTRPS_VPAD_BUTTON_R_STICK_Y_MINMAX][1],
-                                                   config_controller[deviceslot][CONTRPS_VPAD_BUTTON_R_STICK_Y_INVERT][1],
+                                                   invertRY,
                                                    deadzone);
         }
 
